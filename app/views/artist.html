@@ -1,8 +1,8 @@
 <p>This is the {{artistName | uppercase}} view.</p>
 <p>
-<input type="text" ng-model="releasename"> <button><i class="icon-search" ng-click="">Clear</i></button>
+<input type="text" ng-model="artistname"> <button><i class="icon-search" ng-click=""></i></button>
 </p>
 <ul class="unstyled">
-	<li ng-repeat="release in artistReleases  | filter:releasename | orderBy: release.year">{{release.name}} - {{release.year}}<li>
+	<li ng-repeat="release in artistReleases  | orderBy: release.release_year">{{release.artist_nm}} -  {{release.title}} :{{release.release_year}}<li>
 </ul>
 
