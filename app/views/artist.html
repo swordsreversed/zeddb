@@ -1,8 +1,15 @@
-<p>This is the {{artistName | uppercase}} view.</p>
+<!--<p>This is the {{artistName | uppercase}} view.</p>
 <p>
 <input type="text" ng-model="artistname"> <button><i class="icon-search" ng-click=""></i></button>
-</p>
+</p>-->
+
+
+    <div class='container-fluid'>
+        <pre>Artist: {{artistname}}</pre>
+        Artist <input type="text" ng-model="artistname" ng-model="value" typeahead="suggestion for suggestion in artists($viewValue)" />
+        
+    </div>
+<p><button ng-click="getReleases();">Go </button></p>
 <ul class="unstyled">
 	<li ng-repeat="release in artistReleases  | orderBy: release.release_year">{{release.artist_nm}} -  {{release.title}} :{{release.release_year}}<li>
 </ul>
-

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('zeddbApp', ['restangular'])
+angular.module('zeddbApp', ['restangular', 'ui.bootstrap'])
   .config(function ($routeProvider, RestangularProvider) {
     $routeProvider
       .when('/', {
@@ -25,9 +25,9 @@ angular.module('zeddbApp', ['restangular'])
       id: "library_no",
       route: "restangularRoute"
     });
-    
-  });
+  })
+ //end config
  
+ // override the default input to update on blur
 
 
-    
