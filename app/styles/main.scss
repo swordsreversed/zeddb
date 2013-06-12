@@ -1,1 +1,51 @@
 @import "compass_twitter_bootstrap";
+
+body {
+    padding-top:40px;
+	font-size: 12px;
+}
+
+
+
+.navbar {
+    font-size:14px;
+}
+
+.form-horizontal .control-label {
+    width:80px;
+}
+
+.form-horizontal .controls {
+    margin-left: 100px;
+}
+
+.form-horizontal .control-group {
+    margin-bottom: 10px;
+}
+
+.form-horizontal select, label, input[type="text"], textarea {
+    height: auto;
+    font-size:12px;
+    line-height:15px;
+}
+
+
+.form-box {
+    border:1px solid #cccccc;
+    padding:10px;
+    margin-top:10px;
+}
+
+.sideheader {
+    color: #fff;
+    margin:0 0 15px -20px;
+    padding: 5px 10px;
+    background: #772C64;
+    border:1px solid #cccccc;
+    float:left;
+}
+
+.mini {
+    height: auto;
+    line-height: 14px;
+}

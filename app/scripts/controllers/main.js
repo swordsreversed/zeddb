@@ -1,10 +1,14 @@
 'use strict';
 
 angular.module('zeddbApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope, $http, $location, limitToFilter) {
+    
+         
+      
+        $scope.search = function() {
+            $location.path('/releases');
+        };
+      
+        $scope.isCollapsed = true;
+       
   });
