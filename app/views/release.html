@@ -1,0 +1,36 @@
+<form name="releaseSearchForm" ng-submit="search()">
+        Artist <input class="input-medium search-query" type="text" name="artistName" ng-model="artistName" typeahead="suggestion for suggestion in artists($viewValue)" />
+        Title <input class="input-medium search-query" type="text" ng-model="title" typeahead="suggestion for suggestion in titles($viewValue)" />
+        <button type="submit" id="search-button">Search</button>
+        <button type="button" ng-click="clearForm();" id="clear-button">Clear</button>
+    <a style="padding-left:20px;" href="" ng-click="isCollapsed = !isCollapsed">Advanced Search</a>
+        
+    <div collapse="isCollapsed">
+		<div style="margin-top:10px;" class="well well-large">
+            <label name="cont_female" class="checkbox inline"><input type="checkbox" >Local?</label>
+            <label class="checkbox inline"><input type="checkbox" >Female?</label>
+        </div> 
+	</div>
+</form>   
+
+
+<div style="padding:10px 0 20px 0;">
+    <span> <h2>Artist: {{artistname}}</h2></span>
+        <button class="btn btn-primary" ng-click="add();" type="button">Add New</button>
+</div>       
+    
+
+<table class="table table-striped">
+        <tr>
+        <th><a href="" ng-click="predicate = 'name'; reverse=false">Artist</a></th>
+          <th><a href="" ng-click="predicate = 'title'; reverse=!reverse">Title</a></th>
+          <th><a href="" ng-click="predicate = 'library_no'; reverse=!reverse">ID</a></th>
+          <th><a href="" ng-click="predicate = 'release_year'; reverse=!reverse">Year</a><i class="icon-arrow-down"></i></th>
+        </tr>
+        <tr ng-repeat="release in artistReleases  | orderBy:predicate:reverse">
+          <td>{{release.artist_nm}}</td>
+            <td><a href="#/releases/{{release.library_no}}">{{release.title}}</a></td>
+          <td>{{release.library_no}}</td>
+          <td>{{release.release_year}}</td>
+        </tr>
+      </table>

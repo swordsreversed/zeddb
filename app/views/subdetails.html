@@ -1,0 +1,261 @@
+<form class="form-horizontal">
+<fieldset>
+<div class="container-fluid">
+    <h2>{{sub.subfirstname}} {{sub.sublastname}}</h2>
+<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{ alert.msg }}</alert>
+
+    
+    <div class="row-fluid">  
+        <div class="span6">
+            <div class="form-box">
+                <h6 class="sideheader">Contact</h6>
+                
+                <div class="control-group" style="clear:both;">
+                    <label class="control-label">First Name</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.subfirstname">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Last name</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.sublastname">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Home Phone</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.subhomephone">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Mobile Ph</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.submobile">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Email</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.subemail">
+                    </div>
+                </div> 
+                <div class="control-group">
+                    <label class="control-label">Web Url</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.suburl">
+                    </div>
+                </div> 
+                <div class="control-group">
+                    <label class="control-label">Gender</label>
+                    <div class="controls">
+                        <select ng-model="sub.gender" class="input-large" ng-options="g.id as g.desc for g in gender">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="control-group controls-row" style="padding:10px 0;"> 
+                     <span style="float:left;margin-left:25px;"><label class="checkbox inline"><input type="checkbox" ng-model="sub.fl_volunteer" ng-true-value="on" ng-false-value="">Volunteer?</label>
+                    <label class="checkbox inline"><input type="checkbox" ng-model="sub.fl_announcer" ng-true-value="on" ng-false-value="">Announcer?</label>
+                    </span>
+            </div>
+                
+                        
+                
+            </div> <!-- end music/album section -->
+            <div class="form-box">
+            <h6 class="sideheader">Details</h6>
+                <div class="control-group" style="clear:both;">
+                <label class="control-label">Organisation</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" ng-model="sub.subbusinessname">
+                </div>
+                </div>   
+                <div class="control-group">
+                    <label class="control-label">Band Name</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.subbandname">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Artist</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.subartistname">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Musician</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.submusicianname">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">DJ Name</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.subdjname">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Status</label>
+                    <div class="controls">
+                        <select ng-model="sub.subskill" class="input-large" ng-options="s for s in skills">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Skills (Other)</label>
+                    <div class="controls">
+                        <textarea ng-model="sub.subskilldesc" class="input-xlarge"></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Comments</label>
+                    <div class="controls">
+                        <textarea ng-model="sub.subcomment" class="input-xlarge"></textarea>
+                    </div>
+                </div>  
+                
+            </div> <!-- end details section -->
+            
+        </div> <!-- end span 6  -->
+    
+        <div class="span6">
+            
+            
+            <div class="form-box">
+                <h6 class="sideheader">Location</h6>
+                <div class="control-group" style="clear:both;">
+                    <label class="control-label">Address</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.subaddress1">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Address</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.subaddress2">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Suburb</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.suburb">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Postcode</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.postcode">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">State</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.state">
+                    </div>
+                </div> 
+  
+            </div> <!-- end Subscriber Info  -->
+            
+            
+            <div class="form-box">
+                <h6 class="sideheader">Subscription</h6>
+                
+                <div class="control-group" style="clear:both;">
+                    <label class="control-label">Sub #</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.subnumber">
+                    </div>
+                </div>    
+                <div class="control-group">
+                    <label class="control-label">Sub Type</label>
+                    <div class="controls">
+                        <select ng-model="sub.status" class="input-large" ng-options="s for s in status">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Program</label>
+                    <div class="controls">
+                        <select ng-model="sub.status" class="input-large" ng-options="s for s in status">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Donation</label>
+                    <div class="controls">
+                        <textarea ng-model="sub.donation" class="input-xlarge"></textarea>
+                    </div>
+                </div>  
+                <div class="control-group">
+                    <label class="control-label">Radiothon</label>
+                    <div class="controls">
+                        <textarea ng-model="sub.radiothonprizeid" class="input-xlarge"></textarea>
+                    </div>
+                </div>  
+                <div class="control-group">
+                    <label class="control-label">Sub Expiry</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.expirydate">
+                    </div>
+                </div>
+                <div class="control-group controls-row" style="padding:10px 0;"> 
+                     <span style="float:left;margin-left:25px;"><label class="checkbox inline"><input type="checkbox" ng-model="sub.subscription_update" ng-true-value="1" ng-false-value="0">Paid</label>
+                    Tick if new or renewing subscription
+                    </span>
+            </div>
+                <div class="control-group">
+                    <label class="control-label">Receipt #</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.receiptnumber">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Paid Date</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.paymentdate">
+                    </div>
+                </div>
+            </div> <!-- end Music Dep -->
+            <div class="form-box">
+                <h6 class="sideheader">System</h6>
+                
+                <div class="control-group" style="clear:both;">
+                    <label class="control-label">Created</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.createddate">
+                    </div>
+                </div>
+                <div class="control-group" style="clear:both;">
+                    <label class="control-label">Modified</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.changeddate">
+                    </div>
+                </div>
+                <div class="control-group" style="clear:both;">
+                    <label class="control-label">User</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" ng-model="sub.changeduser">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end span 6  -->
+        
+    </div> <!-- end row  -->    
+    
+   
+            
+            
+    <div class="form-actions">   
+        <button type="submit" ng-click="saveSubscriber();" class="btn btn-primary">Update</button>
+        <button type="submit" ng-click="deleteSubscriber();" class="btn btn-danger">Delete</button>   
+    </div>    
+            
+</div>   
+
+</fieldset>
+</form>
