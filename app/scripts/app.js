@@ -4,7 +4,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap'])
   .config(function ($routeProvider, $locationProvider, RestangularProvider) {
     $routeProvider
       .when('/releases/:id', {
-        templateUrl: 'views/releasedetail.html',
+        templateUrl: 'views/releasedetails.html',
         controller: 'ReleaseDetailCtrl'
       })
       .when('/releases', {
@@ -16,15 +16,12 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap'])
         controller: 'ReleaseCtrl'
       })
       
-      .when('/subscriber/:name', {
+    
+     .when('/subscribers/', {
         templateUrl: 'views/subscriber.html',
         controller: 'SubscriberCtrl'
       })
-     .when('/subscriber/', {
-        templateUrl: 'views/subscriber.html',
-        controller: 'SubscriberCtrl'
-      })
-    .when('/subdetails/:id', {
+    .when('/subscribers/:id', {
         templateUrl: 'views/subdetails.html',
         controller: 'SubdetailsCtrl'
       })
@@ -58,7 +55,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap'])
 })
 
 .factory('SubService', ['$resource', '$http', '$rootScope', function($resource) {
-    return $resource('http://db.4zzzfm.org.au/api/v1/subscriber/:id', {id: '@subnumber'}, {update: {method: 'PUT'}})
+    return $resource('http://db.4zzzfm.org.au/api/v1/subscribers/:id', {id: '@subnumber'}, {update: {method: 'PUT'}})
 }])
 
 .factory('SubsBandService', function($resource) {

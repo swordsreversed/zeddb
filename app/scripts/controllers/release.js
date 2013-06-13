@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('zeddbApp')
-    .controller('ReleaseCtrl', function ($scope, $http, $location, $routeParams, ReleaseService, SubsBandService, Restangular, limitToFilter) {
+    .controller('ReleaseCtrl', function ($scope, $http, $location, $routeParams, ReleaseService, Restangular, limitToFilter) {
+        
+      
+        $scope.releaseSearchFormData={};
         
         $scope.artists = function (artistName) {
             return $http.get("http://db.4zzzfm.org.au/api/v1/artistsuggest/" + artistName).then(function (response) {
@@ -14,23 +17,35 @@ angular.module('zeddbApp')
                 return limitToFilter(response.data, 15);
             });
         };
-        
-       // search with qstring - return LIST of results from resource
-        
-        console.log($routeParams);
-        //set order of display
-        
-        
-            
+          
             //var artistReleases = Restangular.one("artist", $scope.artistname);
             //$scope.artistReleases = artistReleases.getList();
+
+        $scope.search = function() {
             
-        $scope.clearForm = function() {
-            $scope.artistName = "";
-            $scope.title = "";
-            $scope.releaseSearchForm.$setPristine();
-        }
+            if ($scope.releaseSearchForm.$dirty == true) {
+                var $params = $scope.releaseSearchFormData;
+                // search with qstring - return LIST of results from resource
+                $scope.releases = ReleaseService.query($params, function(u, getResponseHeaders){
+                
+                    //set order of display
+                    $scope.predicate = 'release_year';
+                    $scope.artistname = $routeParams.name;
+                });
+            } else {
+                console.log('no search shit!');
+            
+            }
+        };
         
+        
+         $scope.clearForm = function() {
+            $scope.releaseSearchFormData.artist_nm = "";
+            $scope.releaseSearchFormData.title = "";
+            $scope.releaseSearchFormData.cont_female = 0;
+            $scope.releaseSearchForm.$setPristine();
+            console.log($scope.releaseSearchFormData.cont_female);
+        };
         
 		
         //add new
@@ -38,14 +53,4 @@ angular.module('zeddbApp')
              $location.path('/releases/new/'+$scope.artistname);
         };
          
-        $scope.search = function() {
-            console.log($scope.artistName)
-            var $params = [{artist_nm: $scope.artistName}, {title: $scope.title}];
-            $scope.release = ReleaseService.get($params, function(u, getResponseHeaders){
-                $scope.subscriber = SubsBandService.get({name: u.artist_nm});
-                    $scope.predicate = 'release_year';
-                    $scope.artistname = $routeParams.name;
-            });
-        };
-  
-    });
+});

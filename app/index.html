@@ -9,77 +9,66 @@
     <title>4ZZZ Music Library</title>
     <meta name="description" content="4ZZZ Music Library">
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    
     <!-- build:css styles/main.css -->
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <script src="scripts/modernizr-latest.js"></script>
   </head>
   <body class="container" ng-app="zeddbApp">
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
 
-    <!--[if lt IE 9]>
-      <script src="components/es5-shim/es5-shim.js"></script>
-      <script src="components/json3/lib/json3.min.js"></script>
-    <![endif]-->
-
-    <div class="navbar navbar-fixed-top navbar-inverse">
-        
-  <div class="navbar-inner">
-      <div class="container">
-    <a class="brand" href="#"><img src="http://www.4zzzfm.org.au/sites/default/files/zed_logo.png" style="height:25px;" /></a>
-    <ul class="nav">
-        
-      
-      <li><a href="#/releases">Music</a></li>
-      <li><a href="#/subscriber">Subscribers</a></li>
-        
-      <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      Reports
-      <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      <li><a href="">Report 1</a></li>
-        <li><a href="">Report 2</a></li>
-        
-    </ul>
-          
-  </li>
-        </ul>
+<div class="navbar navbar-fixed-top navbar-inverse">        
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="#"><img src="http://www.4zzzfm.org.au/sites/default/files/zed_logo.png" style="height:25px;" /></a>
+            <ul class="nav">
+                <li><a href="#/releases">Music</a></li>
+                <li><a href="#/subscribers">Subscribers</a></li>        
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      Reports
+                      <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a href="">Report 1</a></li>
+                        <li><a href="">Report 2</a></li>     
+                    </ul>      
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
 
       
-    <!-- Main content area -->
-    <div class="container-fluid" style="padding-top:20px;" >
-    
-    
-     
-        
+<!-- Main content area -->
+<div class="container-fluid" style="padding-top:20px;" >
+    <!-- Angular Container -->     
     <div ng-view></div>
-	</div>
-	<!--<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.js"></script> -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-resource.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-cookies.js"></script>
-    <script src="//cdn.jsdelivr.net/restangular/latest/restangular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-sanitize.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore.js"></script>
-	<script src="scripts/ui-bootstrap-tpls-0.3.0.js "></script>
 	
-    <!-- build:js scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/services.js"></script>
-    <script src="scripts/controllers/artist.js"></script>
-    <script src="scripts/controllers/Release.js"></script>
-    <script src="scripts/controllers/subscriber.js"></script>
-    <script src="scripts/controllers/subdetails.js"></script>
-    <!-- endbuild -->
+</div>
+	
+<!--<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.js"></script> -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-resource.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-cookies.js"></script>
+<script src="//cdn.jsdelivr.net/restangular/latest/restangular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-sanitize.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore.js"></script>
+<script src="scripts/ui-bootstrap-tpls-0.3.0.js "></script>
+
+<!-- build:js scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/main.js"></script>
+<script src="scripts/controllers/services.js"></script>
+<script src="scripts/controllers/release.js"></script>
+<script src="scripts/controllers/releasedetail.js"></script>
+<script src="scripts/controllers/subscriber.js"></script>
+<script src="scripts/controllers/subdetails.js"></script>
+<!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. 
     <script>

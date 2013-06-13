@@ -1,35 +1,40 @@
 'use strict';
 
 angular.module('zeddbApp')
-    .controller('SubscriberCtrl', function ($scope, $http, $location, $routeParams, Restangular, limitToFilter) {
+    .controller('SubscriberCtrl', function ($scope, $http, $location, $routeParams, Restangular, SubService, limitToFilter) {
         
+        $scope.subscriberSearchFormData={};
         
-        $scope.subsuggest = function (subsearchname) {
-            return $http.get("http://db.4zzzfm.org.au/api/v1/subsuggest/" + subsearchname).then(function (response) {
+        $scope.subsuggest = function (subName) {
+            return $http.get("http://db.4zzzfm.org.au/api/v1/subsuggest/" + subName).then(function (response) {
                 return limitToFilter(response.data, 15);
             });
         };
         
         
-        //set order of display
-        
-        if ($routeParams.name){
-            $scope.predicate = 'subnumber';
-        
-            $scope.subname = $routeParams.name;
-            var subq = Restangular.one("subscribers", $scope.subname);
-            $scope.subscribers = subq.getList();
-        }
-        
-        
-		
-        //add new
-         $scope.add = function() {
-             $location.path('/subdetails/add');
-        };
-         
         $scope.search = function() {
-            $location.path('/subscriber/'+$scope.subsearchname);
+            
+            if ($scope.subscriberSearchForm.$dirty == true) {
+                var $params = $scope.subscriberSearchFormData;
+                // search with qstring - return LIST of results from resource
+                $scope.subscribers = SubService.query($params, function(u, getResponseHeaders){
+                
+                    //set order of display
+                    $scope.predicate = 'createddate';
+                   
+                });
+            } else {
+                console.log('no search shit!');
+            
+            }
+        };
+        
+        
+         $scope.clearForm = function() {
+            $scope.subscriberSearchFormData.subName = "";
+
+            $scope.subscriberSearchForm.$setPristine();
+            console.log($scope.subscriberSearchFormData.cont_female);
         };
   
     });

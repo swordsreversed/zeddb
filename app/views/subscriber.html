@@ -1,19 +1,29 @@
-<form ng-submit="search()">
-        Name <input class="input-medium search-query" type="text" ng-model="subsearchname" typeahead="suggestion for suggestion in subsuggest($viewValue)" />
-        <button type="submit" id="search-button">Search</button> <a style="padding-left:20px;" href="" ng-click="isCollapsed = !isCollapsed">Advanced Search</a>
+<div class="row-fluid">
+<form name="subscriberSearchForm" ng-submit="search()">
+         <strong>Search: </strong>
+        <input class="input-medium search-query" type="text" name="subName" placeholder="Name" ng-model="subscriberSearchFormData.subName" typeahead="suggestion for suggestion in subsuggest($viewValue)" ng-uppercase-input />
+
+    <button class="btn btn-primary" type="submit" id="search-button">Search</button>
+    <button class="btn btn-danger" type="button" ng-click="clearForm();" id="clear-button">Clear</button>
+    
+    <a style="padding-left:20px;" href="" ng-click="isCollapsed = !isCollapsed">Advanced Search</a>
+    
+    <button class="btn btn-primary" ng-click="add();" type="button" style="float:right;">Add New Release</button>
         
     <div collapse="isCollapsed">
 		<div style="margin-top:10px;" class="well well-large">
+            <div class="control-group controls-row" style="padding:10px 0;">
+             <input class="input-small search-query" type="text" name="release_year" ng-model="subscriberSearchFormData.release_year" placeholder="Release Year" />
+             <input class="input-medium search-query" type="text" name="release_location" ng-model="subscriberSearchFormData.release_location" placeholder="Log" />
             <label class="checkbox inline"><input type="checkbox" >Local?</label>
-            <label class="checkbox inline"><input type="checkbox" >Female?</label>
+            <label name="cont_female" class="checkbox inline" ng-model="subscriberSearchFormData.cont_female" ng-true-value="F" ng-false-value="" ><input type="checkbox" >Female?</label>
+            </div>
         </div> 
 	</div>
-</form>
-
-<div style="padding:10px 0 20px 0;">
     
-        <button class="btn btn-primary" ng-click="add();" type="button">Add New</button>
-</div>       
+</form>   
+</div>  
+<div class="row-fluid">        
     
 
 <table class="table table-striped">
@@ -25,8 +35,10 @@
         </tr>
         <tr ng-repeat="sub in subscribers  | orderBy:predicate:reverse">
           
-            <td><a href="#/subdetails/{{sub.subnumber}}">{{sub.subfirstname}} {{sub.sublastname}}</a></td>
+            <td><a href="#/subscribers/{{sub.subnumber}}">{{sub.subfirstname}} {{sub.sublastname}}</a></td>
           <td>{{sub.subnumber}}</td>
           <td>{{sub.createddate}}</td>
         </tr>
       </table>
+    
+</div>
