@@ -14,9 +14,9 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
-  try {
-    yeomanConfig.app = require('./component.json').appPath || yeomanConfig.app;
-  } catch (e) {}
+  //try {
+  //  yeomanConfig.app = require('./component.json').appPath || yeomanConfig.app;
+  //} catch (e) {}
 
   grunt.initConfig({
     yeoman: yeomanConfig,
@@ -131,7 +131,7 @@ module.exports = function (grunt) {
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
         fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: '<%= yeoman.app %>/components',
+        importPath: 'app/components',
         relativeAssets: true
       },
       dist: {},

@@ -1,62 +1,70 @@
 'use strict';
 
 angular.module('zeddbApp')
-  .controller('SubdetailsCtrl', function ($scope, $routeParams, Restangular, SubService, GenresService, ThemesService, SubsBandService, $dialog, $location) {
+  .controller('SubdetailsCtrl', function ($rootScope, $scope, $http, $routeParams, Restangular, SubService, SkillsService, ProgramsService, SubsBandService, SubtypesService, $dialog, $location, limitToFilter) {
     
     
     //set vars for constants 
     $scope.alerts = [];
-    $scope.gender = [{id: 1, desc: "MALE"}, {id: 2, desc: "FEMALE"}, {id: 3, desc: "TRANS"}];
-    $scope.promo = ["Promo Campaign", "Staff Pick", "Other"];
-    $scope.format = ["CD", "DIGITAL", "VINYL"];
-    $scope.status = ["In Library", "Received", "Culled", "Rejected"];
+    $scope.gender = [{id: 1, desc: 'MALE'}, {id: 2, desc: 'FEMALE'}, {id: 3, desc: 'TRANS'}];
+   
+    if ($routeParams.id) {
+        $scope.sub = SubService.get({id: $routeParams.id}, function(u, getResponseHeaders){});
+    } else {
+        $scope.sub= new SubService();
+    }
+      
+        $scope.suburbsuggest = function (suburbName) {
+            return $http.get('http://db.4zzzfm.org.au/api/v1/suburbsuggest/' + suburbName).then(function (response) {
+                return limitToFilter(response.data, 15);
+                
+            });
+        };
+      
+        $scope.postcodesuggest = function (postCode) {
+            return $http.get('http://db.4zzzfm.org.au/api/v1/postcodesuggest/' + postCode).then(function (response) {
+                return limitToFilter(response.data, 15);
+                
+            });
+        };
       
       
-    //var _genres = Restangular.all("genres");
-    //$scope.genres = _genres.getList();
-    
-    $scope.sub = SubService.get({id: $routeParams.id}, function(u, getResponseHeaders){
-            
-            console.log(u);
-    });
-    $scope.genres = GenresService.query();
-    $scope.themes = ThemesService.query();  
-    
-    
-      
-
+      //$scope.$watch('sub.suburb.suburb', function() { console.log(sub.suburb.suburb); });  
      
-        
-    $scope.saveSubscriber = function() {
+      $scope.skills = SkillsService.query();
+      $scope.programs = ProgramsService.query();
+      $scope.subtypes = SubtypesService.query();
+      
+      $scope.saveSubscriber = function() {
         
         
         if ($routeParams.id){
             //update
-            console.log('tolo');
-            $scope.sub.$update({id: $routeParams.id}, 
+            delete $scope.sub.suburb; // delete suburb object
+            $scope.sub.$update({id: $routeParams.id},
             function success(response) {
                 if ($scope.alerts.length > 0) {
                 $scope.alerts.splice(0, 1);
                 }
-                $scope.alerts.push({msg: "Subscriber "+$scope.release.library_no+" Updated!"});  
+                $scope.alerts.push({msg: 'Subscriber '+$scope.sub.subnumber+' Updated!'});
                 $scope.sub = SubService.get({id: $routeParams.id});
                 
-            }, function err() 
-            {
+            }, function err() {
                 console.log('Couldnt update!');
             });
         } else {
             //insert
-            var tempRelease = $scope.release;
+            delete $scope.sub.suburb;
+            console.log($scope.sub);
             $scope.sub.$save();
-            alert("Subscriber added");
-            $location.path("/subscribers/"+$scope.sub.sublastname);
+            alert('Subscriber added.');
+            $location.path('/subscribers/');
         }
     };
     
     
       
-    $scope.deleteRelease = function() {
+    $scope.deleteSubscriber = function() {
         var title = 'Warning';
         var msg = 'Are you sure you wish to delete this record?';
         var btns = [{result:'cancel', label: 'Cancel'}, {result:'ok', label: 'OK', cssClass: 'btn-primary'}];
@@ -65,11 +73,11 @@ angular.module('zeddbApp')
         $dialog.messageBox(title, msg, btns)
           .open()
           .then(function(result){
-            if (result == "ok") { 
+            if (result === 'ok') { 
                 $scope.sub.$delete({id: $routeParams.id},function() {
-                    
-                    alert("Record deleted");
-                    $location.path("/subscribers/"+$scope.sub.sublastname); 
+                    $rootScope.subscriberParams = {};
+                    alert('Record deleted.');
+                    $location.path('/subscribers/');
     
                 });
             }
@@ -82,5 +90,12 @@ angular.module('zeddbApp')
     };
       
       
+      $scope.onSuburbChange = function ($item, $model, $label) {
+            
+          //item = suburb object, model = val (id), label = name
+          $scope.sub.suburbid = $item.suburbid;
+          $scope.sub.suburb.postcode = $item.postcode;
+          $scope.sub.suburb.state = $item.state;
+        };
+      
   });
-
