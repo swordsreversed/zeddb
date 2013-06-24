@@ -20,7 +20,7 @@ angular.module('zeddbApp')
         
         
         $scope.subsuggest = function (subName) {
-            return $http.get('http://db.4zzzfm.org.au/api/v1/subsuggest/' + subName).then(function (response) {
+            return $http.get('http://testdev.4zzzfm.org.au/api/v1/subsuggest/' + subName).then(function (response) {
                 return limitToFilter(response.data, 15);
             });
         };

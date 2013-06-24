@@ -16,7 +16,7 @@ angular.module('zeddbApp')
         }
         
         $scope.contactsuggest = function (orgName) {
-            return $http.get('http://db.4zzzfm.org.au/api/v1/contactsuggest/' + orgName).then(function (response) {
+            return $http.get('http://zed.dev.192.168.1.102.xip.io//api/v1/contactsuggest/' + orgName).then(function (response) {
                 return limitToFilter(response.data, 15);
             });
         };

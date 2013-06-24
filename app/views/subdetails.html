@@ -226,7 +226,7 @@
                 <div class="control-group">
                     <label class="control-label">Paid Date</label>
                     <div class="controls">
-                        <input type="text" class="input-small" ng-model="sub.paymentdate" data-date-format="yyyy/mm/dd" bs-datepicker>
+                        <input type="text" class="input-small" ng-change="alert('yo');" ng-model="sub.paymentdate" data-date-format="yyyy/mm/dd" bs-datepicker>{{sub.paymentdate}}
                     </div>
                 </div>
             </div> <!-- end Music Dep -->

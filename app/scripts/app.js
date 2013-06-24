@@ -51,7 +51,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
         .html5Mode(false);
 
     RestangularProvider
-        .setBaseUrl("http://db.4zzzfm.org.au/api/v1");
+        .setBaseUrl("http://testdev.4zzzfm.org.au/api/v1");
     RestangularProvider
         .setRestangularFields({
         id: "library_no",
@@ -64,7 +64,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
 
 //services
 .factory('ReleaseService', ['$resource', '$http', '$rootScope', function ($resource) {
-        return $resource('http://db.4zzzfm.org.au/api/v1/releases/:id', {
+        return $resource('http://testdev.4zzzfm.org.au/api/v1/releases/:id', {
             id: '@id'
         }, {
             update: {
@@ -74,37 +74,37 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
     }])
 
 .factory('GenresService', function ($resource) {
-    return $resource('http://db.4zzzfm.org.au/api/v1/genres')
+    return $resource('http://zed.dev.192.168.1.102.xip.io/api/v1/genres')
 })
 
 .factory('ThemesService', function ($resource) {
-    return $resource('http://db.4zzzfm.org.au/api/v1/themes')
+    return $resource('http://testdev.4zzzfm.org.au/api/v1/themes')
 })
 
 .factory('DepartmentsService', function ($resource) {
-    return $resource('http://db.4zzzfm.org.au/api/v1/departments')
+    return $resource('http://testdev.4zzzfm.org.au/api/v1/departments')
 })
 
 .factory('InterestsService', function ($resource) {
-    return $resource('http://db.4zzzfm.org.au/api/v1/interests')
+    return $resource('http://testdev.4zzzfm.org.au/api/v1/interests')
 })
 
 .factory('SkillsService', function ($resource) {
-    return $resource('http://db.4zzzfm.org.au/api/v1/skills')
+    return $resource('http://testdev.4zzzfm.org.au/api/v1/skills')
 })
 
 .factory('ProgramsService', function ($resource) {
-    return $resource('http://db.4zzzfm.org.au/api/v1/programs')
+    return $resource('http://testdev.4zzzfm.org.au/api/v1/programs')
 })
 
 .factory('SubtypesService', function ($resource) {
-    return $resource('http://db.4zzzfm.org.au/api/v1/subtypes')
+    return $resource('http://testdev.4zzzfm.org.au/api/v1/subtypes')
 })
 
 
 
 .factory('SubService', ['$resource', '$http', '$rootScope', function ($resource) {
-        return $resource('http://db.4zzzfm.org.au/api/v1/subscribers/:id', {
+        return $resource('http://testdev.4zzzfm.org.au/api/v1/subscribers/:id', {
             id: '@subnumber'
         }, {
             update: {
@@ -114,7 +114,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
     }])
 
 .factory('ContactService', ['$resource', '$http', '$rootScope', function ($resource) {
-        return $resource('http://db.4zzzfm.org.au/api/v1/contacts/:id', {
+        return $resource('http://testdev.4zzzfm.org.au/api/v1/contacts/:id', {
             id: '@contact_no'
         }, {
             update: {
@@ -127,7 +127,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
 
 
 .factory('SubsBandService', function ($resource) {
-    return $resource('http://db.4zzzfm.org.au/api/v1/subscribers/band/:name', {
+    return $resource('http://testdev.4zzzfm.org.au/api/v1/subscribers/band/:name', {
         name: '@subbandname'
     }, {
         update: {
@@ -164,6 +164,40 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
             }
             modelCtrl.$parsers.push(capitalize);
             capitalize(scope[attrs.ngModel]); // capitalize initial value
+        }
+    };
+})
+
+
+
+.directive('ngOnBlur', function($parse){
+         return {
+
+        require: 'ngModel',
+        link:  function(scope, elm, attrs){       
+                var onBlurFunction = $parse(attrs['ngOnBlur']);
+                elm.bind("blur", function(event) {
+                    scope.$apply(function() {
+                        onBlurFunction(scope, { $event: event });
+                    })});
+        }   
+        }
+})
+
+.directive('ngModelOnblur', function($parse) {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ngModelCtrl) {
+            if (attrs.type === 'radio' || attrs.type === 'checkbox') return;
+            
+            elm.unbind('input').unbind('keydown').unbind('change');
+            var onBlurFunction = $parse(attrs['ngModelOnblur']);
+            elm.bind('blur', function() {
+                scope.$apply(function() {
+                    onBlurFunction(scope, { $event: event });
+                });         
+            });
         }
     };
 });

@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('zeddbApp')
-    .controller('ReleaseCtrl', function ($rootScope, $scope, $http, $location, $routeParams, ReleaseService, GenresService, ThemesService, Restangular, limitToFilter) {
+    .controller('ReleaseCtrl', function ($rootScope, $scope, $http, $location, $routeParams, ReleaseService, GenresService, ThemesService, Restangular, limitToFilter, $filter) {
+        
+        
+        console.log($routeParams);
+        
         
         $scope.releaseSearchFormData = {};
         
@@ -10,7 +14,7 @@ angular.module('zeddbApp')
                         //set order of display
                     $scope.predicate = 'release_year';
                     $scope.releaseSearchFormData = $rootScope.releaseParams;
-                    delete $rootScope.releaseParams;
+                    //delete $rootScope.releaseParams;
                 });
         }
         
@@ -29,13 +33,13 @@ angular.module('zeddbApp')
         $scope.themes = ThemesService.query();
 
         $scope.artists = function (artistName) {
-            return $http.get('http://db.4zzzfm.org.au/api/v1/artistsuggest/' + artistName).then(function (response) {
+            return $http.get('http://testdev.4zzzfm.org.au/api/v1/artistsuggest/' + artistName).then(function (response) {
                 return limitToFilter(response.data, 15);
             });
         };
     
         $scope.titles = function (title) {
-            return $http.get('http://db.4zzzfm.org.au/api/v1/titlesuggest/' + title).then(function (response) {
+            return $http.get('http://testdev.4zzzfm.org.au/api/v1/titlesuggest/' + title).then(function (response) {
                 return limitToFilter(response.data, 15);
             });
         };
@@ -82,5 +86,9 @@ angular.module('zeddbApp')
                 $location.path('/releases/new/release');
             }
         };
-    
+        
+        $scope.convertDate = function (date) {
+            console.log(date);
+            $scope.cDate = $filter('date')(new Date(date), 'y-MM-dd');
+        }; 
     });

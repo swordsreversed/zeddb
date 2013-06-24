@@ -15,29 +15,42 @@
     <div collapse="!isCollapsed">
 		<div style="margin-top:10px;" class="well well-small">
             <div class="control-group controls-row" style="padding:10px 0;">
-            <input class="input-medium search-query" type="search" name="album_label" ng-model="releaseSearchFormData.album_label" placeholder="Label" ng-uppercase-input />
-             <input class="input-small search-query" type="search" name="release_year" ng-model="releaseSearchFormData.release_year" placeholder="Release Year" />
-             <input class="input-medium search-query" type="text" name="release_location" ng-model="releaseSearchFormData.release_location" placeholder="Log" />
-            <label class="checkbox inline"><input type="checkbox" name="cont_local" ng-model="releaseSearchFormData.cont_local" ng-true-value="L" ng-false-value="" >Local?</label>
-            <label class="checkbox inline"><input type="checkbox" name="cont_female" ng-model="releaseSearchFormData.cont_female" ng-true-value="F" ng-false-value="" >Female?</label>
-            <label class="checkbox inline" style="margin-right:5px;">Aus/NZ?</label>  
+                <input class="input-medium search-query" type="search" name="album_label" ng-model="releaseSearchFormData.album_label" placeholder="Label" ng-uppercase-input />
+                <input class="input-small search-query" type="search" name="release_year" ng-model="releaseSearchFormData.release_year" placeholder="Release Year" />
+                <input class="input-medium search-query" type="text" name="release_location" ng-model="releaseSearchFormData.release_location" placeholder="Log" />
+                <label class="checkbox inline"><input type="checkbox" name="cont_local" ng-model="releaseSearchFormData.cont_local" ng-true-value="L" ng-false-value="" >Local?</label>
+                <label class="checkbox inline"><input type="checkbox" name="cont_female" ng-model="releaseSearchFormData.cont_female" ng-true-value="F" ng-false-value="" >Female?</label>
+                <label class="checkbox inline" style="margin-right:5px;">Aus/NZ?</label>  
                     <select ng-model="releaseSearchFormData.cont_ausnz" name="release.cont_ausnz" class="input-small" ng-options="a for a in ausnz"><option></option></select>
-                
+                </div>
                  <div class="control-group controls-row">  
-                    <label class="control-label inline" style="margin-right:5px;">Log Format</label>
+                    <ul class="inline unstyled">
+                        <li>
+                     <label class="control-label inline" style="margin-right:5px;">Log Format</label>
                         <select ng-model="releaseSearchFormData.release_location" name="release_location" class="input-small" ng-options="f.format_srch as f.format_desc for f in extendedFormats">
                             <option></option>
                         </select>
-                    
+                    </li>
+                        <li>
                     <label class="control-label inline" style="margin-right:5px;">Library Format</label>
-                        <select ng-model="releaseSearchFormData.format_stored" name="format_stored" class="input-small" ng-options="f as f for f in format"><option></option></select>
                      
+                        <select ng-model="releaseSearchFormData.format_stored" name="format_stored" class="input-small" ng-options="f as f for f in format"><option></option></select>
+                     </li>
+                        <li>
                      <label class="control-label" style="margin-right:5px;">Genre 1</label>
                                 <select ng-model="releaseSearchFormData.cont_genre" class="input-medium" ng-options="g.genre_id as g.genre_desc for g in genres"><option></option></select>
+                            </li>
+                        <li>
                                 <label class="control-label" style="margin-right:5px;">Genre 2</label>
                                 <select ng-model="releaseSearchFormData.cont_subgenre" class="input-medium" ng-options="g.genre_id as g.genre_desc for g in genres"><option></option></select>
-                </div>
-            </div>
+                </li><li>
+               
+                    <input class="input-small search-query" type="search" name="created_at" ng-model="releaseSearchFormData.created_at" placeholder="Created" data-date-format="yyyy/mm/dd" bs-datepicker / >{{releaseSearchFormData.created_at | date:'yyyy-MM-dd'}}<button ng-click="convertDate(releaseSearchFormData.created_at)">click</button>{{cDate}}
+                    <input class="input-small search-query" type="search" name="user" ng-model="releaseSearchFormData.modify_user" placeholder="User" />
+                    
+                
+                        </li>
+                        </ul>
         </div> 
 	</div>
     
