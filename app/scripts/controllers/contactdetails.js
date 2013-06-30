@@ -1,23 +1,19 @@
 'use strict';
 
-angular.module('zeddbApp')
-    .controller('ContactdetailsCtrl', function ($scope, $routeParams, $http, ContactService, DepartmentsService, InterestsService, $dialog, $location, limitToFilter) {
+app.controller('ContactdetailsCtrl', function ($scope, $routeParams, $http, ContactService, DepartmentsService, InterestsService, $dialog, $location, limitToFilter, contact) {
 
+    
+    if ($routeParams.id) {
+      $scope.contact = contact;
+    } else {
+      $scope.contact= new ContactService();
+    }
 
     //set vars for constants 
     $scope.alerts = [];
 
-    if ($routeParams.id) {
-
-        $scope.contact = ContactService.get({
-            id: $routeParams.id
-        }, function (u, getResponseHeaders) {});
-    } else {
-        $scope.contact = new ContactService();
-    }
-    
     $scope.suburbsuggest = function (suburbName) {
-            return $http.get('http://db.4zzzfm.org.au/api/v1/suburbsuggest/' + suburbName).then(function (response) {
+            return $http.get(apiSrc + '/suburbsuggest/' + suburbName).then(function (response) {
                 return limitToFilter(response.data, 15);
                 
             });

@@ -62,14 +62,16 @@
         <tr>
         <th><a href="" ng-click="predicate = 'artist_nm'; reverse=!reverse">Artist</a></th>
           <th><a href="" ng-click="predicate = 'title'; reverse=!reverse">Title</a></th>
-          <th><a href="" ng-click="predicate = 'library_no'; reverse=!reverse">ID</a></th>
+          <th><a href="" ng-click="predicate = 'library_no'; reverse=!reverse">Record #</a></th>
           <th><a href="" ng-click="predicate = 'release_year'; reverse=!reverse">Year</a><i class="icon-arrow-down"></i></th>
+          <th><a href="" ng-click="predicate = 'entered_dt'; reverse=!reverse">Created</a><i class="icon-arrow-down"></i></th>
         </tr>
         <tr ng-repeat="release in releases  | orderBy:predicate:reverse">
           <td>{{release.artist_nm}}</td>
             <td><a href="#/releases/{{release.library_no}}">{{release.title}}</a></td>
           <td>{{release.library_no}}</td>
           <td>{{release.release_year}}</td>
+            <td>{{release.entered_dt}}</td>
         </tr>
 </table>
     

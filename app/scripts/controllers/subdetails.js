@@ -1,28 +1,29 @@
 'use strict';
 
-angular.module('zeddbApp')
-  .controller('SubdetailsCtrl', function ($rootScope, $scope, $http, $routeParams, Restangular, SubService, SkillsService, ProgramsService, SubsBandService, SubtypesService, $dialog, $location, limitToFilter) {
+app.controller('SubdetailsCtrl', function ($rootScope, $scope, $http, $routeParams, SubService, SkillsService, ProgramsService, SubsBandService, SubtypesService, $dialog, $location, limitToFilter, subscriber) {
     
+
     
     //set vars for constants 
     $scope.alerts = [];
+    $scope.subsuggest = [];
     $scope.gender = [{id: 1, desc: 'MALE'}, {id: 2, desc: 'FEMALE'}, {id: 3, desc: 'TRANS'}];
    
     if ($routeParams.id) {
-        $scope.sub = SubService.get({id: $routeParams.id}, function(u, getResponseHeaders){});
+            $scope.sub = subscriber;
     } else {
-        $scope.sub= new SubService();
+            $scope.sub= new SubService();
     }
       
         $scope.suburbsuggest = function (suburbName) {
-            return $http.get('http://db.4zzzfm.org.au/api/v1/suburbsuggest/' + suburbName).then(function (response) {
+            return $http.get(apiSrc + '/suburbsuggest/' + suburbName).then(function (response) {
                 return limitToFilter(response.data, 15);
                 
             });
         };
       
         $scope.postcodesuggest = function (postCode) {
-            return $http.get('http://db.4zzzfm.org.au/api/v1/postcodesuggest/' + postCode).then(function (response) {
+            return $http.get(apiSrc + '/postcodesuggest/' + postCode).then(function (response) {
                 return limitToFilter(response.data, 15);
                 
             });
@@ -35,9 +36,17 @@ angular.module('zeddbApp')
       $scope.programs = ProgramsService.query();
       $scope.subtypes = SubtypesService.query();
       
+      
+      
+      $scope.subCheck = function (last, first) {
+             $http.get(apiSrc + '/subsuggesta/' + last + '/' + first).then(function (response) {
+                $scope.subsuggest = limitToFilter(response.data, 15);
+            });
+        };
+      
       $scope.saveSubscriber = function() {
         
-        
+       if ($scope.subForm.$valid === true) {  
         if ($routeParams.id){
             //update
             delete $scope.sub.suburb; // delete suburb object
@@ -60,6 +69,7 @@ angular.module('zeddbApp')
             alert('Subscriber added.');
             $location.path('/subscribers/');
         }
+       }
     };
     
     
@@ -73,7 +83,7 @@ angular.module('zeddbApp')
         $dialog.messageBox(title, msg, btns)
           .open()
           .then(function(result){
-            if (result === 'ok') { 
+            if (result === 'ok') {
                 $scope.sub.$delete({id: $routeParams.id},function() {
                     $rootScope.subscriberParams = {};
                     alert('Record deleted.');
@@ -90,12 +100,19 @@ angular.module('zeddbApp')
     };
       
       
-      $scope.onSuburbChange = function ($item, $model, $label) {
+    $scope.onSuburbChange = function ($item, $model, $label) {
             
           //item = suburb object, model = val (id), label = name
           $scope.sub.suburbid = $item.suburbid;
           $scope.sub.suburb.postcode = $item.postcode;
           $scope.sub.suburb.state = $item.state;
-        };
+    };
       
+    $scope.upDate = function() {
+
+        var fdate = new Date($scope.sub.paymentdate); 
+        fdate.setDate($scope.sub.paymentdate.getDate() + 365);
+        $scope.sub.expirydate =  fdate;
+    } 
+    
   });

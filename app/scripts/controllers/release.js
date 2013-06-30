@@ -1,10 +1,7 @@
 'use strict';
 
-angular.module('zeddbApp')
-    .controller('ReleaseCtrl', function ($rootScope, $scope, $http, $location, $routeParams, ReleaseService, GenresService, ThemesService, Restangular, limitToFilter, $filter) {
+app.controller('ReleaseCtrl', function ($rootScope, $scope, $http, $location, $routeParams, ReleaseService, GenresService, ThemesService, limitToFilter, $filter) {
         
-        
-        console.log($routeParams);
         
         
         $scope.releaseSearchFormData = {};
@@ -33,13 +30,13 @@ angular.module('zeddbApp')
         $scope.themes = ThemesService.query();
 
         $scope.artists = function (artistName) {
-            return $http.get('http://testdev.4zzzfm.org.au/api/v1/artistsuggest/' + artistName).then(function (response) {
+            return $http.get('http://zed.dev/api/v1/artistsuggest/' + artistName).then(function (response) {
                 return limitToFilter(response.data, 15);
             });
         };
     
         $scope.titles = function (title) {
-            return $http.get('http://testdev.4zzzfm.org.au/api/v1/titlesuggest/' + title).then(function (response) {
+            return $http.get('http://zed.dev/api/v1/titlesuggest/' + title).then(function (response) {
                 return limitToFilter(response.data, 15);
             });
         };

@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('zeddbApp')
-    .controller('SubscriberCtrl', function ($rootScope, $scope, $http, $location, $routeParams, Restangular, SubService, limitToFilter) {
+app.controller('SubscriberCtrl', function ($rootScope, $scope, $http, $location, $routeParams, SubService, limitToFilter) {
         
         $scope.subscriberSearchFormData={};
         
@@ -20,7 +19,7 @@ angular.module('zeddbApp')
         
         
         $scope.subsuggest = function (subName) {
-            return $http.get('http://testdev.4zzzfm.org.au/api/v1/subsuggest/' + subName).then(function (response) {
+            return $http.get(apiSrc + '/subsuggest/' + subName).then(function (response) {
                 return limitToFilter(response.data, 15);
             });
         };

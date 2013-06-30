@@ -1,11 +1,9 @@
 'use strict';
 
-angular.module('zeddbApp')
-    .controller('ReleaseDetailCtrl', function ($rootScope, $scope, $routeParams, Restangular, ReleaseService, GenresService, ThemesService, SubsBandService, $dialog, $location) {
 
+app.controller('ReleaseDetailCtrl', function ($rootScope, $scope, $routeParams, ReleaseService, GenresService, ThemesService, SubsBandService, $dialog, $location, release) {
 
-    
-        
+  
     //set vars for constants 
     $scope.alerts = [];
     $scope.ausnz = ['A', 'NZ'];
@@ -15,31 +13,12 @@ angular.module('zeddbApp')
 
     $scope.genres = GenresService.query();
     $scope.themes = ThemesService.query();
-    //var _genres = Restangular.all("genres");
-    //$scope.genres = _genres.getList();
+    
 
     if ($routeParams.id) {
-      $scope.release = ReleaseService.get({ id: $routeParams.id }, function (u, getResponseHeaders) {
-          $scope.subscriber = SubsBandService.get({ name: u.artist_nm});
-        });
-        
-        
-        /* $scope.releaseO = ReleaseService.get({id: $routeParams.id}).$then(
-           function(res) {
-            $scope.release = res.data;
-            $scope.subscriber = SubsBandService.get({name: res.data.artist_nm });
-               
-           }  
-        ); */
-
+      $scope.release = release;
     } else {
       $scope.release= new ReleaseService();
-    }
-
-    if ($routeParams.name) {
-        
-      $scope.release.artist_nm = $routeParams.name;
-
     }
 
 

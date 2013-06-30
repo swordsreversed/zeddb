@@ -14,8 +14,12 @@
      <div collapse="!isCollapsed">
 		<div style="margin-top:10px;" class="well well-large">
             <div class="control-group controls-row" style="padding:10px 0;">
-             <input class="input-small search-query" type="search" name="subemail" ng-model="subscriberSearchFormData.subemail" placeholder="Email" />
+             <input class="input-medium search-query" type="search" name="subemail" ng-model="subscriberSearchFormData.subemail" placeholder="Email" />
             <input class="input-small search-query" type="search" name="subnumber" ng-model="subscriberSearchFormData.subnumber" placeholder="Sub Number" />
+                
+                <input class="input-medium search-query" type="search" name="subbusinessname" ng-model="subscriberSearchFormData.subbusinessname" placeholder="Business" />
+                
+                <input class="input-medium search-query" type="search" name="subbandname" ng-model="subscriberSearchFormData.subbandname" placeholder="Band" ng-uppercase-input />  
             </div> 
         </div>
 	</div>
@@ -30,14 +34,12 @@
 
 <table class="table table-striped">
         <tr>
-
           <th><a href="" ng-click="predicate = 'sublastname'; reverse=!reverse">Name</a></th>
           <th><a href="" ng-click="predicate = 'subnumber'; reverse=!reverse">ID</a></th>
           <th><a href="" ng-click="predicate = 'createddate'; reverse=!reverse">Date Joined</a><i class="icon-arrow-down"></i></th>
         </tr>
         <tr ng-repeat="sub in subscribers  | orderBy:predicate:reverse">
-          
-            <td><a href="#/subscribers/{{sub.subnumber}}">{{sub.subfirstname}} {{sub.sublastname}}</a></td>
+          <td><a href="#/subscribers/{{sub.subnumber}}">{{sub.subfirstname}} {{sub.sublastname}}</a></td>
           <td>{{sub.subnumber}}</td>
           <td>{{sub.createddate}}</td>
         </tr>

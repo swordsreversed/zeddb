@@ -1,46 +1,64 @@
 'use strict';
 
-angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap.directives'])
-    .config(function ($routeProvider, $locationProvider, RestangularProvider) {
+var apiSrc = 'http://zed.dev/api/v1';
+
+var app = angular.module('zeddbApp', ['ngResource', 'ui.bootstrap', '$strap.directives'])
+    .config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/releases/:id', {
         templateUrl: 'views/releasedetails.html',
-        controller: 'ReleaseDetailCtrl'
+        controller: 'ReleaseDetailCtrl',
+        resolve: {
+          release : function(ReleaseService, $route) {
+            return ReleaseService.get({id: $route.current.params.id});
+          }
+        }
     })
         .when('/releases', {
         templateUrl: 'views/release.html',
         controller: 'ReleaseCtrl'
     })
-        .when('/releases/new/:name', {
+        .when('/releases/new/release', {
         templateUrl: 'views/releasedetails.html',
-        controller: 'ReleaseDetailCtrl'
+        controller: 'ReleaseDetailCtrl',
+        resolve: { release: function() { return {}; }}
     })
-
-
-    .when('/subscribers/', {
+        .when('/subscribers/', {
         templateUrl: 'views/subscriber.html',
         controller: 'SubscriberCtrl'
     })
         .when('/subscribers/:id', {
         templateUrl: 'views/subdetails.html',
-        controller: 'SubdetailsCtrl'
+        controller: 'SubdetailsCtrl',
+        resolve: {
+          subscriber : function(SubService, $route) {
+            return SubService.get({id: $route.current.params.id});
+          }
+        }
     })
         .when('/subscribers/new/subscriber', {
         templateUrl: 'views/subdetails.html',
-        controller: 'SubdetailsCtrl'
+        controller: 'SubdetailsCtrl',
+        resolve: { subscriber: function() { return {}; }}
     })
-
-    .when('/contacts/', {
+        .when('/contacts/', {
         templateUrl: 'views/contact.html',
-        controller: 'ContactCtrl'
+        controller: 'ContactCtrl',
+        
     })
-        .when('/contacts/:id', {
+    .when('/contacts/:id', {
         templateUrl: 'views/contactdetails.html',
-        controller: 'ContactdetailsCtrl'
+        controller: 'ContactdetailsCtrl',
+        resolve: {
+          contact : function(ContactService, $route) {
+            return ContactService.get({id: $route.current.params.id});
+          }
+        }
     })
         .when('/contacts/new/contact', {
         templateUrl: 'views/contactdetails.html',
-        controller: 'ContactdetailsCtrl'
+        controller: 'ContactdetailsCtrl',
+        resolve: { contact: function() { return {}; }} 
     })
 
     .otherwise({
@@ -50,21 +68,45 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
     $locationProvider
         .html5Mode(false);
 
-    RestangularProvider
-        .setBaseUrl("http://testdev.4zzzfm.org.au/api/v1");
-    RestangularProvider
-        .setRestangularFields({
-        id: "library_no",
-        route: "restangularRoute"
-    });
+   
     //RestangularProvider.setListTypeIsArray(false);
 })
 //end config
 
 
 //services
-.factory('ReleaseService', ['$resource', '$http', '$rootScope', function ($resource) {
-        return $resource('http://testdev.4zzzfm.org.au/api/v1/releases/:id', {
+
+
+app.factory('GenresService', function ($resource) {
+    return $resource(apiSrc + '/genres')
+})
+
+app.factory('ThemesService', function ($resource) {
+    return $resource(apiSrc + '/themes')
+})
+
+app.factory('DepartmentsService', function ($resource) {
+    return $resource(apiSrc + '/departments')
+})
+
+app.factory('InterestsService', function ($resource) {
+    return $resource(apiSrc + '/interests')
+})
+
+app.factory('SkillsService', function ($resource) {
+    return $resource(apiSrc + '/skills')
+})
+
+app.factory('ProgramsService', function ($resource) {
+    return $resource(apiSrc + '/programs')
+})
+
+app.factory('SubtypesService', function ($resource) {
+    return $resource(apiSrc + '/subtypes')
+})
+
+app.factory('ReleaseService', ['$resource', '$http', '$rootScope', function ($resource) {
+        return $resource(apiSrc + '/releases/:id', {
             id: '@id'
         }, {
             update: {
@@ -73,38 +115,8 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
         });
     }])
 
-.factory('GenresService', function ($resource) {
-    return $resource('http://zed.dev.192.168.1.102.xip.io/api/v1/genres')
-})
-
-.factory('ThemesService', function ($resource) {
-    return $resource('http://testdev.4zzzfm.org.au/api/v1/themes')
-})
-
-.factory('DepartmentsService', function ($resource) {
-    return $resource('http://testdev.4zzzfm.org.au/api/v1/departments')
-})
-
-.factory('InterestsService', function ($resource) {
-    return $resource('http://testdev.4zzzfm.org.au/api/v1/interests')
-})
-
-.factory('SkillsService', function ($resource) {
-    return $resource('http://testdev.4zzzfm.org.au/api/v1/skills')
-})
-
-.factory('ProgramsService', function ($resource) {
-    return $resource('http://testdev.4zzzfm.org.au/api/v1/programs')
-})
-
-.factory('SubtypesService', function ($resource) {
-    return $resource('http://testdev.4zzzfm.org.au/api/v1/subtypes')
-})
-
-
-
-.factory('SubService', ['$resource', '$http', '$rootScope', function ($resource) {
-        return $resource('http://testdev.4zzzfm.org.au/api/v1/subscribers/:id', {
+app.factory('SubService', ['$resource', '$http', '$rootScope', function ($resource) {
+        return $resource(apiSrc + '/subscribers/:id', {
             id: '@subnumber'
         }, {
             update: {
@@ -113,8 +125,8 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
         })
     }])
 
-.factory('ContactService', ['$resource', '$http', '$rootScope', function ($resource) {
-        return $resource('http://testdev.4zzzfm.org.au/api/v1/contacts/:id', {
+app.factory('ContactService', ['$resource', '$http', '$rootScope', function ($resource) {
+        return $resource(apiSrc + '/contacts/:id', {
             id: '@contact_no'
         }, {
             update: {
@@ -126,8 +138,11 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
     }])
 
 
-.factory('SubsBandService', function ($resource) {
-    return $resource('http://testdev.4zzzfm.org.au/api/v1/subscribers/band/:name', {
+
+
+
+app.factory('SubsBandService', function ($resource) {
+    return $resource(apiSrc + 'subscribers/band/:name', {
         name: '@subbandname'
     }, {
         update: {
@@ -138,7 +153,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
 
 
 // override the default input to update on blur
-.directive('ngBlur', function () {
+app.directive('ngBlur', function () {
     return function (scope, elem, attrs) {
         elem.bind('blur', function () {
             scope.$apply(attrs.ngBlur);
@@ -146,7 +161,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
     };
 })
 
-.directive('ngUppercaseInput', function () {
+app.directive('ngUppercaseInput', function () {
     return {
 
         require: 'ngModel',
@@ -170,7 +185,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
 
 
 
-.directive('ngOnBlur', function($parse){
+app.directive('ngOnBlur', function($parse){
          return {
 
         require: 'ngModel',
@@ -184,7 +199,7 @@ angular.module('zeddbApp', ['ngResource', 'restangular', 'ui.bootstrap', '$strap
         }
 })
 
-.directive('ngModelOnblur', function($parse) {
+app.directive('ngModelOnblur', function($parse) {
     return {
         restrict: 'A',
         require: 'ngModel',

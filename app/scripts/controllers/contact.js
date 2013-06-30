@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('zeddbApp')
-    .controller('ContactCtrl', function ($rootScope, $scope, $http, $location, $routeParams, Restangular, ContactService, DepartmentsService, limitToFilter) {
+app.controller('ContactCtrl', function ($rootScope, $scope, $http, $location, $routeParams, ContactService, DepartmentsService, limitToFilter) {
         
         $scope.contactSearchFormData={};
         
@@ -16,7 +15,7 @@ angular.module('zeddbApp')
         }
         
         $scope.contactsuggest = function (orgName) {
-            return $http.get('http://zed.dev.192.168.1.102.xip.io//api/v1/contactsuggest/' + orgName).then(function (response) {
+            return $http.get(apiSrc + '/contactsuggest/' + orgName).then(function (response) {
                 return limitToFilter(response.data, 15);
             });
         };
@@ -25,17 +24,17 @@ angular.module('zeddbApp')
         
         $scope.search = function() {
             
-            if ($scope.contactSearchForm.$dirty === true) {
-                
-                
-              var params = $scope.contactSearchFormData;
-                // search with qstring - return LIST of results from resource
-                $scope.contacts = ContactService.query(params, function(u, getResponseHeaders){
-                
+                if ($scope.contactSearchForm.$dirty === true) {
+                    
+                    var params = $scope.contactSearchFormData;
+                    // search with qstring - return LIST of results from resource
+                    $scope.contacts = ContactService.query(params, function(){
+                    
                     //set order of display
                     $scope.predicate = 'createddate';
                     $rootScope.contactParams = params;
-                });
+                    });
+                
             } else {
                 console.log('no search shit!');        
             }
